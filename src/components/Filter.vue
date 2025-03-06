@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { useRouteQuery } from '@vueuse/router';
 import { products } from '@/mock/products'
@@ -18,6 +19,7 @@ const name = useRouteQuery('name', '')
 const minPrice = useRouteQuery('minPrice', null, { transform: Number })
 const maxPrice = useRouteQuery('maxPrice', null, { transform: Number })
 const description = useRouteQuery('description', '')
+const soldOut = useRouteQuery('soldOut', false, { transform: Boolean })
 
 </script>
 <template>
@@ -52,6 +54,10 @@ const description = useRouteQuery('description', '')
     <div>
       <label>Description</label>
       <Input type="text" placeholder="Description" v-model="description"/>
+    </div>
+    <div class="flex items-center gap-2">
+      <label>Sold Out</label>
+      <Checkbox v-model="soldOut"/>
     </div>
   </div>
 </template>

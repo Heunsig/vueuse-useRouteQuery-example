@@ -10,13 +10,14 @@ const name = computed(() => route.query.name ?? '')
 const minPrice = computed(() => route.query.minPrice ?? null)
 const maxPrice = computed(() => route.query.maxPrice ?? null)
 const description = computed(() => route.query.description ?? '')
-
+const soldOut = computed(() => route.query.soldOut ?? false)
 const filteredProducts = computed(() => {
   return mockProducts.filter(product => product.name.toLocaleLowerCase().includes(name.value.toLocaleLowerCase()))
                         .filter(product => minPrice.value ? product.price >= minPrice.value : true)
                         .filter(product => maxPrice.value ? product.price <= maxPrice.value : true)
                         .filter(product => category.value === 'All' ? true : product.category === category.value)
                         .filter(product => description.value ? product.description.toLocaleLowerCase().includes(description.value.toLocaleLowerCase()) : true)
+                        .filter(product => soldOut.value ? product.soldOut : true)
 })  
 
 function formatPrice(price) {
@@ -34,9 +35,13 @@ function formatPrice(price) {
       >
         <div class="space-y-3">
           <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-              {{ product.name }}
-            </h3>
+            <div class="flex items-center gap-2">
+              <h3 class="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+                {{ product.name }} 
+              </h3>
+              <span v-if="product.soldOut" class="text-sm text-red-500 ">Sold Out</span>
+            </div>
+            
             <span class="font-medium text-zinc-900 dark:text-zinc-50">
               ${{ formatPrice(product.price) }}
             </span>
