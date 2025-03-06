@@ -19,14 +19,6 @@ const filteredProducts = computed(() => {
                         .filter(product => description.value ? product.description.toLocaleLowerCase().includes(description.value.toLocaleLowerCase()) : true)
 })  
 
-function formatDate(date) {
-  return new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
-}
-
 function formatPrice(price) {
   return new Intl.NumberFormat('en-US').format(price)
 }
